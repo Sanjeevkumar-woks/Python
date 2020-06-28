@@ -1,0 +1,44 @@
+'''
+Created on 30-May-2020
+
+@author: USER
+'''
+import xlrd
+import xlwt
+from xlrd.sheet import Sheet
+class ExcelManipulation:
+    
+    def excel_manipulation_based_on_gender(self):
+        file=xlrd.open_workbook("employeedetails.xls")
+        
+        male=xlwt.Workbook("maleemployees.xls")
+        wr1=male.add_sheet("malesheet")
+        
+        female=xlwt.Workbook("femaleemployees.xls")
+        wr2=female.add_sheet("femalesheet")
+        
+        Sheet=file.sheet_by_index(0)
+        male_row=0
+        female_row=0
+        wr1.write(male_row,0,"EmployeeId")
+        wr1.write(male_row,1,"EmployeeName")
+        wr2.write(female_row,0,"EmployeeId")
+        wr2.write(female_row,1,"EmployeeName")
+        print(Sheet.nrows)
+        for index in range(1,Sheet.nrows):
+            employeeid=str(Sheet.cell(index, 0).value)
+            employeename=Sheet.cell(index, 1).value
+            employeegender=Sheet.cell(index, 2).value
+            if employeegender=="Male":
+                male_row+=1
+                wr1.write(male_row,0,employeeid)
+                wr1.write(male_row,1,employeename)
+                male.save("maleemployees.xls")
+            else:
+                female_row+=1
+                wr2.write(female_row,0,employeeid)
+                wr2.write(female_row,1,employeename)
+                female.save("femaleemployees.xls")
+               
+excel_object=ExcelManipulation()
+excel_object.excel_manipulation_based_on_gender()                    

@@ -1,0 +1,126 @@
+'''
+Created on 30-May-2020
+
+@author: USER
+'''
+import xlrd
+import xlwt
+from xlrd.sheet import Sheet
+from xlutils.copy import copy
+class ProductTransaction:
+    
+    pending_sufficient_status=False
+    pending_available_status=False
+    
+    product_file=xlrd.open_workbook("product.xls")
+ 
+    transaction=xlwt.Workbook("transaction.xls")
+    wr=transaction.add_sheet("transactionsheet")
+
+    ship=xlwt.Workbook("ship.xls")
+    wr2=ship.add_sheet("shipsheet")
+
+    pending=xlwt.Workbook("pending.xls")
+    wr3=pending.add_sheet("pendingsheet")
+    
+    transaction_row=0
+    ship_row=0
+    pending_row=0
+    
+    transaction_status=False
+    pending_sufficient_status=False
+    pending_available_status=False
+    print("Transaction")
+    transaction_id=input("Enter the transactionid")
+    product_code_for_transaction=input("Enter the ProductCode")
+    
+    def main(self):
+        
+        #Creating the columnheadings for transaction file
+        ProductTransaction.wr.write(ProductTransaction.transaction_row,0,"TransactionId")
+        ProductTransaction.wr.write(ProductTransaction.transaction_row,1,"ProductCode")
+        ProductTransaction.wr.write(ProductTransaction.transaction_row,2,"QuantityOrdered")
+
+        #Creating the columnheadings for ship file
+        ProductTransaction.wr2.write(ProductTransaction.ship_row,0,"ProductCode")
+        ProductTransaction.wr2.write(ProductTransaction.ship_row,1,"TransactionId")
+        ProductTransaction.wr2.write(ProductTransaction.ship_row,2,"QuantityOrdered")
+        ProductTransaction.wr2.write(ProductTransaction.ship_row,3,"TotalBill")
+
+        #Creating the columnheadings for pending file
+        ProductTransaction.wr3.write(ProductTransaction.pending_row,0,"TransactionId")
+        ProductTransaction.wr3.write(ProductTransaction.pending_row,1,"PendingStatus")
+        
+        #Get the sheet from product file
+        Sheet=ProductTransaction.product_file.sheet_by_index(0)
+        #Reading the sheet values
+        for index in range(1, Sheet.nrows):
+            product_id=Sheet.cell(index,0).value
+            product_name=Sheet.cell(index,1).value
+            product_price=Sheet.cell(index,2).value
+            quantity_on_hand=int(Sheet.cell(index,3).value)
+            print(product_id,product_name,product_price,quantity_on_hand)
+            
+            #validating the productcode
+            if product_id==ProductTransaction.product_code_for_transaction:
+                quantity_ordered=int(input("Enter the QuantityOrdered"))
+                #validating the quantityordered
+                if quantity_on_hand>=quantity_ordered:
+                    remaining_quantity=quantity_on_hand-quantity_ordered
+                    
+                    #Updating the excelsheet with the remaining quantity
+                    product_file2=xlrd.open_workbook("product.xls")
+                    product_wb=copy(product_file2)
+                    product_sheet=product_wb.get_sheet(0)
+                    product_sheet.write(index,3,remaining_quantity)
+                    product_wb.save("product.xls")
+                    
+                    #Calculating the total bill ordered by customer
+                    total_bill=product_price*quantity_ordered
+                    ProductTransaction.transaction_row+=1
+                    ProductTransaction.wr.write(ProductTransaction.transaction_row,0,ProductTransaction.transaction_id)
+                    ProductTransaction.wr.write(ProductTransaction.transaction_row,1,ProductTransaction.product_code_for_transaction)
+                    ProductTransaction.wr.write(ProductTransaction.transaction_row,2,quantity_ordered)
+                    ProductTransaction.transaction.save("transaction.xls")
+                    ProductTransaction.ship_row+=1
+                    ProductTransaction.wr2.write(ProductTransaction.ship_row,0,ProductTransaction.product_code_for_transaction)
+                    ProductTransaction.wr2.write(ProductTransaction.ship_row,1,ProductTransaction.transaction_id)
+                    ProductTransaction.wr2.write(ProductTransaction.ship_row,2,quantity_ordered)
+                    ProductTransaction.wr2.write(ProductTransaction.ship_row,3,total_bill)
+                    ProductTransaction.ship.save("ship.xls")
+                    ProductTransaction.transaction_status=True
+                    break
+                else:
+                    ProductTransaction.pending_sufficient_status=True
+                    break
+            else:
+                ProductTransaction.pending_available_status=True
+                
+        product_object=ProductTransaction()        
+        if ProductTransaction.transaction_status==True:
+            print("Transaction was successful")            
+        elif ProductTransaction.pending_sufficient_status==True:
+            product_object.pending_sufficient()
+            print("Transaction was not successful due to ordered product quantity was not sufficient")
+        elif ProductTransaction.pending_available_status==True:
+            product_object.pending_available()
+            print("Transaction was not successful due to ordered product was not available")
+                            
+    def pending_sufficient(self):
+            pending_status="Not Sufficient"
+            ProductTransaction.pending_row+=1
+            ProductTransaction.wr3.write(ProductTransaction.pending_row,0,ProductTransaction.transaction_id)
+            ProductTransaction.wr3.write(ProductTransaction.pending_row,1,pending_status)
+            ProductTransaction.pending.save("pending.xls")
+            
+    def pending_available(self):
+            pending_status="Not Available"
+            ProductTransaction.pending_row+=1
+            ProductTransaction.wr3.write(ProductTransaction.pending_row,0,ProductTransaction.transaction_id)
+            ProductTransaction.wr3.write(ProductTransaction.pending_row,1,pending_status)
+            ProductTransaction.pending.save("pending.xls")    
+                        
+product_object2=ProductTransaction()
+product_object2.main()
+
+    

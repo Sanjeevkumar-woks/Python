@@ -1,0 +1,323 @@
+Using List:
+----------
+'''
+Created on 28-May-2020
+
+@author: USER
+'''
+
+class Employee:
+    '''
+    classdocs
+    '''
+    def __init__(self, employeeid=0, employeename="", employeesalary=0.0):
+        self.__employeeid = employeeid
+        self.__employeename = employeename
+        self.__employeesalary = employeesalary
+
+    def get_employeeid(self):
+        return self.__employeeid
+
+
+    def get_employeename(self):
+        return self.__employeename
+
+
+    def get_employeesalary(self):
+        return self.__employeesalary
+
+
+    def set_employeeid(self, value):
+        self.__employeeid = value
+
+
+    def set_employeename(self, value):
+        self.__employeename = value
+
+
+    def set_employeesalary(self, value):
+        self.__employeesalary = value
+
+
+    def del_employeeid(self):
+        del self.__employeeid
+
+
+    def del_employeename(self):
+        del self.__employeename
+
+
+    def del_employeesalary(self):
+        del self.__employeesalary
+        
+    def __repr__(self):
+        return "employeeid "+str(self.__employeeid)+" employeename "+self.__employeename+" employeesalary "+str(self.__employeesalary)
+    
+    
+
+class Company:
+    
+    def __init__(self, mylist=[], companyname="", companybranch=""):
+        self.__mylist=mylist
+        self.__companyname = companyname
+        self.__companybranch = companybranch
+
+    def get_mylist(self):
+        return self.__mylist
+
+
+    def set_mylist(self, value):
+        self.__mylist = value
+
+
+    def del_mylist(self):
+        del self.__mylist
+
+
+    def get_companyname(self):
+        return self.__companyname
+
+
+    def get_companybranch(self):
+        return self.__companybranch
+
+
+    def set_companyname(self, value):
+        self.__companyname = value
+
+
+    def set_companybranch(self, value):
+        self.__companybranch = value
+
+
+    def del_companyname(self):
+        del self.__companyname
+
+
+    def del_companybranch(self):
+        del self.__companybranch
+        
+    def add_employees(self, employee):
+        return  self.__mylist.append(employee) 
+    
+    def get_employees(self):
+        for index in self.__mylist:
+            print(index)
+            
+    def get_employee_details_based_on_employeeid(self,employeeid):
+        for index2 in self.__mylist:
+            if index2.get_employeeid()==employeeid:
+                print(index2)
+                break
+            
+    def update_employee_salary(self, employeeid, incrementalsalary):
+        for index3 in self.__mylist:
+            if index3.get_employeeid()==employeeid:
+                updatedsalary=index3.get_employeesalary()+incrementalsalary
+                index3.set_employeesalary(updatedsalary)
+                print(index3)
+                break                  
+        
+    def remove_employee(self, employeeid):
+        for index4 in self.__mylist:
+            if index4.get_employeeid()==employeeid:
+                self.__mylist.remove(index4)
+                break
+            print(index4)    
+        
+    def __repr__(self):
+        return "companyname "+self.__companyname+" companybranch "+self.__companybranch+" employees "+str(self.__mylist)
+    
+            
+        
+Main:
+----
+'''
+Created on 28-May-2020
+
+@author: USER
+'''
+from builtins import range
+from usinglist.details import Employee, Company
+list=[]
+number_of_employees=int(input("Enter the number of the employees to be entered"))
+for index in range(number_of_employees):
+    employeeid=int(input("Enter the employeeid"))
+    employeename=input("Enter the employeename")
+    employeesalary=float(input("Enter the employeesalary"))
+    employee=Employee(employeeid, employeename, employeesalary)
+    list.append(employee)
+com=Company(list,"world","abcde")
+print("added employees list")
+print(com)
+print("get all employees in company")
+com.get_employees()
+print("get employee details on employeeid")
+employeeid=int(input("Enter the employeeid"))
+com.get_employee_details_based_on_employeeid(employeeid)
+print("update the salary with incrementalsalary")
+employeeid2=int(input("Enter the employeeid"))
+incrementalsalary=float(input("Enter the incrementedsalary"))
+com.update_employee_salary(employeeid2, incrementalsalary)
+print("remove the employee from company")
+employeeid3=int(input("Enter the employeeid"))
+com.remove_employee(employeeid3)
+
+Using set:
+---------
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+
+class Employee(object):
+    '''
+    classdocs
+    '''
+
+    def __init__(self, employeeid=0, employeename="", employeedesignation=""):
+        self.__employeeid = employeeid
+        self.__employeename = employeename
+        self.__employeedesignation = employeedesignation
+
+    def get_employeeid(self):
+        return self.__employeeid
+
+
+    def get_employeename(self):
+        return self.__employeename
+
+
+    def get_employeedesignation(self):
+        return self.__employeedesignation
+
+
+    def set_employeeid(self, value):
+        self.__employeeid = value
+
+
+    def set_employeename(self, value):
+        self.__employeename = value
+
+
+    def set_employeedesignation(self, value):
+        self.__employeedesignation = value
+
+
+    def del_employeeid(self):
+        del self.__employeeid
+
+
+    def del_employeename(self):
+        del self.__employeename
+
+
+    def del_employeedesignation(self):
+        del self.__employeedesignation
+        
+    def __repr__(self):
+        return"employeeid "+str(self.__employeeid)+" employeename "+self.__employeename+" employeedesignation "+self.__employeedesignation
+    
+    
+class Company:
+    
+    def __init__(self, myset={}, companyname="", companybranch=""):
+        self.__myset=myset
+        self.__companyname = companyname
+        self.__companybranch = companybranch
+
+    def get_companyname(self):
+        return self.__companyname
+
+
+    def get_companybranch(self):
+        return self.__companybranch
+
+
+    def get_myset(self):
+        return self.__myset
+
+
+    def set_companyname(self, value):
+        self.__companyname = value
+
+
+    def set_companybranch(self, value):
+        self.__companybranch = value
+
+
+    def set_myset(self, value):
+        self.__myset = value
+
+
+    def del_companyname(self):
+        del self.__companyname
+
+
+    def del_companybranch(self):
+        del self.__companybranch
+
+
+    def del_myset(self):
+        del self.__myset
+
+    def __repr__(self):
+        return "setofemployees "+str(self.__myset)+" companyname "+self.__companyname+" companybranch "+self.__companybranch
+    
+    def get_all_employees(self):
+        print(self.__myset)
+        
+    def get_employee_based_on_employeeid(self, employeeid):
+        for index in self.__myset:
+            if index.get_employeeid()==employeeid:
+                print(index)
+                break
+    
+    def update_employee_designation(self, employeeid2, newdesignation):
+        for index2 in self.__myset:
+            if index2.get_employeeid()==employeeid2:
+                index2.set_employeedesignation(newdesignation)
+                print(index2)
+                break
+    
+    def remove_employee(self, employeeid3):
+        for index3 in self.__myset:
+            if index3.get_employeeid()==employeeid3:
+                self.__myset.remove(index3)
+                break
+        print("remaining employees are")
+        print(self.__myset)        
+          
+
+Main:
+----
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+from usingset.Employee import Employee, Company
+myset=set()
+number_of_employees=int(input("Enter the number of the employees to be entered"))
+for index in range(number_of_employees):
+    employeeid=int(input("Enter the employeeid"))
+    employeename=input("Enter the employeename")
+    employeedesignation=input("Enter the employeedesignation")
+    employee=Employee(employeeid, employeename, employeedesignation)
+    myset.add(employee)
+com=Company(myset,"abcde","fghij")
+print(com)
+print("Employees present in the company")
+com.get_all_employees()
+print("Get employee details based onemployeeid")
+employeeid=int(input("Enter the employeeid"))
+com.get_employee_based_on_employeeid(employeeid)
+print("Assigning the newdesignation to employee")
+employeeid2=int(input("Enter the employeeid"))
+newdesignation=input("Enter the newdesignation of employee")
+com.update_employee_designation(employeeid2, newdesignation)
+print("Removing the employees")
+employeeid3=int(input("Enter the employeeid"))
+com.remove_employee(employeeid3)
+

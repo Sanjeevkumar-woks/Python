@@ -1,0 +1,38 @@
+'''
+Created on 27-May-2020
+
+@author: USER
+'''
+from builtins import range
+from itertools import count
+def email_validation(email):
+ count_at_symbol=0
+ if not email.startswith(".") and not email.startswith("@"):
+    if email.endswith("m") or email.endswith("n"):
+        if len(email)>=10 and len(email)<=50:
+         for index in range(len(email)):
+           if email[index]=="@":
+            count_at_symbol=count_at_symbol+1;
+         if count_at_symbol==1:
+             print("Valid email")
+         else:
+             print("Invalid email")
+        else:
+             print("Invalid email")
+    else:
+         print("Invalid email")
+ else:
+    print("Invalid email")                              
+
+
+Main:
+----
+'''
+Created on 27-May-2020
+
+@author: USER
+'''
+from exercise3 import emailvalidation
+if __name__ == '__main__':
+    email="andreddytarak@gmail.com"
+    emailvalidation.email_validation(email)

@@ -1,0 +1,103 @@
+DBConnector class:
+-----------------
+'''
+Created on 01-Jun-2020
+
+@author: USER
+'''
+import json
+import psycopg2
+class DBConnector(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        pass
+    
+    def connecting_to_database(self):
+        file=open("connection_config.json")
+        datas=json.load(file)
+        data=datas["connection_details"]
+        dbname=data["dbname"]
+        dbserver=data["server"]
+        dbusername=data["username"]
+        dbpassword=data["password"]
+        conne=psycopg2.connect("dbname='"+dbname+"'user='"+dbusername+"'host='"+dbserver+"'password='"+dbpassword+"'")
+        #conne=psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9790270846'")
+        print("Database connection has been established")
+        print(conne)
+        file.close()
+        return conne
+            
+UnloadData class:
+----------------
+'''
+Created on 02-Jun-2020
+
+@author: USER
+'''
+import xlwt
+class UnloadData(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        pass
+    
+    def unload_data(self,connection9):
+        products_row=0
+        products_file=xlwt.Workbook("products.xls")
+        products_sheet=products_file.add_sheet("sheet1") 
+        products_sheet.write(products_row,0,"ProductId")
+        products_sheet.write(products_row,1,"ProductName")
+        products_sheet.write(products_row,2,"ProductPrice")
+        products_sheet.write(products_row,3,"ProductQuantity")
+        cursor=connection9.cursor()
+        cursor.execute("SELECT productid,productname,productprice,productquantity FROM product")
+        rows=cursor.fetchall()    
+        for row in rows:
+            productid=row[0]
+            productname=row[1]
+            productprice=row[2]
+            productquantity=row[3]
+            products_row=products_row+1
+            products_sheet.write(products_row,0,productid)
+            products_sheet.write(products_row,1,productname)
+            products_sheet.write(products_row,2,productprice)
+            products_sheet.write(products_row,3,productquantity)
+            products_file.save("products.xls")
+            print("Event has been achieved successfully")    
+            
+Main:
+----
+'''
+Created on 02-Jun-2020
+
+@author: USER
+'''
+from exercise17.unloadoperation import UnloadData
+from exercise17.dbconnector import DBConnector
+unload_object=UnloadData()
+dbobject=DBConnector()
+connection9=dbobject.connecting_to_database()
+unload_object.unload_data(connection9)
+
+connection_config.json:
+----------------------
+{
+"connection_details":{"dbname":"PetStore",
+                      "server":"localhost",
+                      "username":"postgres",
+                      "password":"9790270846"
+                     }
+}

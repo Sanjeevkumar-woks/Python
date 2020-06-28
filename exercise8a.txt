@@ -1,0 +1,52 @@
+'''
+Created on 28-May-2020
+
+@author: USER
+'''
+from builtins import range
+from itertools import count
+class MyClass(object):
+    '''
+    classdocs
+    '''
+    def __init__(self,email):
+        '''
+        Constructor
+        '''
+        self.email=email
+        
+    def set_email(self):
+       self.__email_validation(self.email)
+           
+    def __email_validation(self,email):
+     count_at_symbol=0   
+     if not email.startswith(".") and not email.startswith("@"):
+      if email.endswith("m") or email.endswith("n"):
+        if len(email)>=10 and len(email)<=50:
+         for index in range(len(email)):
+           if email[index]=="@":
+            count_at_symbol=count_at_symbol+1;
+         if count_at_symbol==1:
+             print("Valid email")
+         else:
+             print("Invalid email")
+        else:
+             print("Invalid email")
+      else:
+         print("Invalid email")
+     else:
+      print("Invalid email")  
+         
+
+Main:
+----
+'''
+Created on 28-May-2020
+
+@author: USER
+'''
+from exercise8.EmailValidator import MyClass
+if __name__ == '__main__':
+ email=input("Enter the email id to be validated")
+ email_validator=MyClass(email)
+ email_validator.set_email()

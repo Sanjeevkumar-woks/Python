@@ -1,0 +1,65 @@
+EmailValidation:
+---------------
+'''
+Created on 01-Jun-2020
+
+@author: USER
+'''
+import re
+class SentenceValidation(object):
+    '''
+    classdocs
+    '''
+
+    def __init__(self, sentence):
+        '''
+        Constructor
+        '''
+        self.__sentence=sentence
+        
+    def validatesentence(self):
+        if len(self.__sentence)<=100:
+            regex="^[a-zA-z0-9\s]+[\,]{1,}[a-zA-Z0-9\s]+[\.]"
+            if re.search(regex, self.__sentence):
+                print("valid sentence")
+            else:
+                print("invalid sentence")
+        else:
+            print("invalid sentence due to length was exceeding the limit")
+            
+sentence="Hello, how are you."            
+objec=SentenceValidation(sentence)
+objec.validatesentence() 
+
+SentenceValidation:
+------------------
+'''
+Created on 01-Jun-2020
+
+@author: USER
+'''
+import re
+class SentenceValidation(object):
+    '''
+    classdocs
+    '''
+
+    def __init__(self, sentence):
+        '''
+        Constructor
+        '''
+        self.__sentence=sentence
+        
+    def validatesentence(self):
+        if len(self.__sentence)<=100:
+            regex="^[a-zA-z0-9\s]+[\,]{1,}[a-zA-Z0-9\s]+[\.]"
+            if re.search(regex, self.__sentence):
+                print("valid sentence")
+            else:
+                print("invalid sentence")
+        else:
+            print("invalid sentence due to length was exceeding the limit")
+            
+sentence="Hello, how are you."            
+objec=SentenceValidation(sentence)
+objec.validatesentence()   

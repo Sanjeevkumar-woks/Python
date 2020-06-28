@@ -1,0 +1,469 @@
+Using List:
+----------
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+from usinglist.exceptiondetails import PetNotFoundException,\
+    InvalidPriceException
+
+class Pets(object):
+    '''
+    classdocs
+    ''' 
+    def __init__(self, petid=0, pettype="", petprice=0.0, petquantity=0):
+        self.__petid = petid
+        self.__pettype = pettype
+        self.__petprice = petprice
+        self.__petquantity = petquantity
+
+    def get_petid(self):
+        return self.__petid
+
+
+    def get_pettype(self):
+        return self.__pettype
+
+
+    def get_petprice(self):
+        return self.__petprice
+
+
+    def get_petquantity(self):
+        return self.__petquantity
+
+
+    def set_petid(self, value):
+        self.__petid = value
+
+
+    def set_pettype(self, value):
+        self.__pettype = value
+
+
+    def set_petprice(self, value):
+        self.__petprice = value
+
+
+    def set_petquantity(self, value):
+        self.__petquantity = value
+
+
+    def del_petid(self):
+        del self.__petid
+
+
+    def del_pettype(self):
+        del self.__pettype
+
+
+    def del_petprice(self):
+        del self.__petprice
+
+
+    def del_petquantity(self):
+        del self.__petquantity
+        
+    def __repr__(self):
+        return "petid "+str(self.__petid)+" pettype "+self.__pettype+" petprice "+str(self.__petprice)+" petquantity "+str(self.__petquantity)
+    
+    
+    
+class Shop:
+    
+    def __init__(self, petsinshop=[], shopid=0, shopname="", shoplocation=""):
+        self.__petsinshop = petsinshop
+        self.__shopid = shopid
+        self.__shopname = shopname
+        self.__shoplocation = shoplocation
+
+    def get_petsinshop(self):
+        return self.__petsinshop
+
+
+    def get_shopid(self):
+        return self.__shopid
+
+
+    def get_shopname(self):
+        return self.__shopname
+
+
+    def get_shoplocation(self):
+        return self.__shoplocation
+
+
+    def set_petsinshop(self, value):
+        self.__petsinshop = value
+
+
+    def set_shopid(self, value):
+        self.__shopid = value
+
+
+    def set_shopname(self, value):
+        self.__shopname = value
+
+
+    def set_shoplocation(self, value):
+        self.__shoplocation = value
+
+
+    def del_petsinshop(self):
+        del self.__petsinshop
+
+
+    def del_shopid(self):
+        del self.__shopid
+
+
+    def del_shopname(self):
+        del self.__shopname
+
+
+    def del_shoplocation(self):
+        del self.__shoplocation
+        
+    def __repr__(self):
+        return "petsinshop "+str(self.__petsinshop)+" shopid "+str(self.__shopid)+" shopname "+self.__shopname+" shoplocation "+self.__shopname
+    
+    def get_all_pets(self):
+        print("Pets available in shop are")
+        print(self.__petsinshop)
+        
+    def get_pet_based_on_petid(self, petid):
+        status=False
+        for index in self.__petsinshop:
+            if index.get_petid()==petid:
+                status=True
+                print(index)    
+                break
+        if status==False:
+            try: 
+                raise PetNotFoundException("Invalid entry of the petid")
+            except PetNotFoundException as e:
+                print(e)
+                
+    def update_petquantity(self, petid, petquantity):
+        for index in self.__petsinshop:
+            if index.get_petid()==petid:
+                quantity=index.get_petquantity()+petquantity
+                index.set_petquantity(quantity)
+                print(index)
+                break
+            
+    def sell_pet(self, petid, petquantity):
+        for index in self.__petsinshop:
+            if index.get_petid()==petid:
+                availablequantity=index.get_petquantity()
+                price=index.get_petprice()
+                if availablequantity>=petquantity:
+                    totalbill=petquantity*price
+                    remainingquantity=availablequantity-petquantity
+                    index.set_petquantity(remainingquantity)
+                    txt="purchased petid is {} and price per each pet is {} and quantity is {} and total bill is {}"
+                    print(txt.format(petid,price,petquantity,totalbill))
+                    break
+                else:
+                    print("ordered petquantity was the insufficient")
+                    break
+          
+
+Main:
+----
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+from usinglist.petdetails import Pets, Shop
+from usinglist.exceptiondetails import InvalidPriceException
+mylist=[]
+number_of_pets=int(input("Enter the numberofpets to add"))
+for index in range(number_of_pets):
+    petid=int(input("Enter the petid"))
+    pettype=input("Enter the pettype")
+    while True:
+        petprice=float(input("Enter the petprice"))
+        if petprice<0.0:
+            try:
+                raise InvalidPriceException("Invalid price has been entered")
+            except InvalidPriceException as e:
+                print(e)
+        else:
+            break        
+    petquantity=int(input("Enter the petquantity"))
+    pet=Pets(petid,pettype,petprice,petquantity)
+    mylist.append(pet)
+sh1=Shop(mylist,9,"abcde","fghij")
+print(sh1)
+sh1.get_all_pets()
+print("Retrive petdetails based on petid")
+petid=int(input("Enter the petid"))
+sh1.get_pet_based_on_petid(petid)
+print("Update petdetails based on quantity")
+petid2=int(input("Enter the petid"))
+petquantity=int(input("Enter the petquantity"))
+sh1.update_petquantity(petid2, petquantity)
+print("Sell pets to the customer")
+petid3=int(input("Enter the petid"))
+petquantity2=int(input("enter the petquantity"))
+sh1.sell_pet(petid3, petquantity2)
+
+exceptions:
+----------
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+
+class PetNotFoundException(Exception):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, message):
+        '''
+        Constructor
+        '''
+        self.__message=message
+    
+    def __str__(self):
+        return self.__message    
+        
+    
+class InvalidPriceException(Exception):
+    
+    def __init__(self, message):
+        self.__message=message
+        
+    def __str__(self):
+        return self.__message      
+                  
+
+Using Dictionary:
+----------------
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+from usingdictionary.exceptiondetails import PetNotFoundException
+
+class Pet(object):
+    '''
+    classdocs
+    '''
+    def __init__(self, pettype="", petprice=0.0, petquantity=0):
+        self.__pettype = pettype
+        self.__petprice = petprice
+        self.__petquantity = petquantity
+
+    def get_pettype(self):
+        return self.__pettype
+
+
+    def get_petprice(self):
+        return self.__petprice
+
+
+    def get_petquantity(self):
+        return self.__petquantity
+
+
+    def set_pettype(self, value):
+        self.__pettype = value
+
+
+    def set_petprice(self, value):
+        self.__petprice = value
+
+
+    def set_petquantity(self, value):
+        self.__petquantity = value
+
+
+    def del_pettype(self):
+        del self.__pettype
+
+
+    def del_petprice(self):
+        del self.__petprice
+
+
+    def del_petquantity(self):
+        del self.__petquantity    
+
+    def __repr__(self):
+        return "pettype "+self.__pettype+" petprice "+str(self.__petprice)+" petquantity "+str(self.__petquantity)
+    
+    
+    
+    
+    
+class Shop:
+    
+    def __init__(self, petsinshop={}, shopid=0, shopname="", shoplocation=""):
+        self.__petsinshop = petsinshop
+        self.__shopid = shopid
+        self.__shopname = shopname
+        self.__shoplocation = shoplocation
+
+    def get_petsinshop(self):
+        return self.__petsinshop
+
+
+    def get_shopid(self):
+        return self.__shopid
+
+
+    def get_shopname(self):
+        return self.__shopname
+
+
+    def get_shoplocation(self):
+        return self.__shoplocation
+
+
+    def set_petsinshop(self, value):
+        self.__petsinshop = value
+
+
+    def set_shopid(self, value):
+        self.__shopid = value
+
+
+    def set_shopname(self, value):
+        self.__shopname = value
+
+
+    def set_shoplocation(self, value):
+        self.__shoplocation = value
+
+
+    def del_petsinshop(self):
+        del self.__petsinshop
+
+
+    def del_shopid(self):
+        del self.__shopid
+
+
+    def del_shopname(self):
+        del self.__shopname
+
+
+    def del_shoplocation(self):
+        del self.__shoplocation
+        
+    def __repr__(self):
+        return "petsinshop "+str(self.__petsinshop)+" shopid "+str(self.__shopid)+" shopname "+self.__shopname+" shoplocation "+self.__shoplocation
+    
+    def get_pets_based_on_petid(self,petid):
+        print("Retrieve the pets available in shop based on petid")
+        status=False
+        for index in self.__petsinshop:
+            if index==petid:
+                status=True
+                print(self.__petsinshop[index])
+                break
+        if status==False:
+            try:
+                raise PetNotFoundException("pet was not found in shop")
+            except PetNotFoundException as e:
+                print(e)
+    
+    def update_petquantity(self, petid, petquantity):
+        print("Update the petquantity in shop based on the petid")
+        for index in self.__petsinshop:
+            if index==petid:
+                totalquantity=self.__petsinshop[index].get_petquantity()+petquantity
+                self.__petsinshop[index].set_petquantity(totalquantity)
+                print(self.__petsinshop[index])
+                break        
+            
+    def sell_pets(self,petid,petquantity):
+        print("Sell pets from the shop")
+        for index in self.__petsinshop:
+            if index==petid:
+                availablequantity=self.__petsinshop[index].get_petquantity()
+                if availablequantity>=petquantity:
+                    price=self.__petsinshop[index].get_petprice()
+                    totalbill=price*petquantity
+                    txt="purchased petid is {} and petprice is {} and petquantity is {} and totalbill is{}"
+                    print(txt.format(index,price,petquantity,totalbill))
+                    remainingquantity=availablequantity-petquantity
+                    self.__petsinshop[index].set_petquantity(remainingquantity)
+                    print("Remaining pets of this type")
+                    print(self.__petsinshop[index])
+                    break
+                else:
+                    print("Petquantity was insufficient in shop")
+                    break        
+
+
+Main:
+----
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+from usingdictionary.petdetails import Pet, Shop
+from usingdictionary.exceptiondetails import InvalidPriceException
+mydictionary={}
+number_of_pets=int(input("Enter the numberofpets to add"))
+for index in range(number_of_pets):
+    petid=int(input("Enter the petid"))
+    pettype=input("Enter the pettype")
+    while True:
+        petprice=float(input("Enter the petprice"))
+        if petprice<0.0:
+            try:
+                raise InvalidPriceException("entered price was not valid")
+            except InvalidPriceException as e:
+                print(e)
+        else:
+            break        
+    petquantity=int(input("Enter the petquantity"))
+    pet=Pet(pettype,petprice,petquantity)
+    mydictionary.update({petid:pet})
+sh1=Shop(mydictionary, 9, "abcde", "fghij")
+print(sh1)
+petid=int(input("Enter the petid to retrieve the pets from shop"))
+sh1.get_pets_based_on_petid(petid)
+petid2=int(input("Enter petid to be updated"))
+petquantity=int(input("Enter the petquantity to be updated in shop"))
+sh1.update_petquantity(petid2, petquantity)
+petid3=int(input("Enter the petid to sell"))
+petquantity2=int(input("Enter petqunatity ordered by customer"))
+sh1.sell_pets(petid3, petquantity2)
+
+exceptions:
+----------
+'''
+Created on 29-May-2020
+
+@author: USER
+'''
+
+class PetNotFoundException(Exception):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, message):
+        '''
+        Constructor
+        '''
+        self.__message=message
+        
+    
+class InvalidPriceException(Exception):
+    
+    def __init__(self, message):
+        self.__message=message            

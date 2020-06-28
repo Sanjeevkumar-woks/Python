@@ -1,0 +1,179 @@
+﻿
+Python exercise
+
+
+
+General Instruction:
+1. For doubt clarification please login to https://im.htcindia.com with your eportal credentials
+2. Fill your profile by clicking image icon on top left corner.
+3. Select group chat menu icon and fill the form as follows (conference.im.htcindia.com).
+4. Click on show group chat button and choose LnB2020-Python.
+5. Technical trainer will be available from 11 AM to 12:00 NOON IST on week days in IM for doubt clarification.
+
+
+
+Conditional statements:
+
+1. Calculate the discount applicable for "Pet shop" customers
+
+a) If the customer is a Premium member then 20% discount is applicable on total bill value.
+b) If the customer is a Gold member then 15% discount is applicable on total bill value.
+c) If the customer is a Silver member then 10% discount is applicable on total bill value.
+d) For all other customers the discount will be 5% of their total bill valued over 2000.
+
+
+
+2. Implement the following logic to select the mode of transport for dispatching Pet animals from our
+"Pet shop" (DO NOT use logical operators)
+
+
+a) If priority is not urgent and the weight is less than or equal to 5 Kg, dispatch by Bike.
+b) If priority is not urgent and the weight is more than 5 Kg, select a lorry if the distance is less
+Than or equal to 250 Km.
+c) If the priority is urgent and distance is less than 50 Km and weight is less than 100 Kg,
+Select a van
+d) In all other cases, use a train
+
+
+
+String & functions:
+
+3) Write a function validate_Email to validate the customers email ID which satisfy the below conditions Boolean validate Email (String email) {
+....
+....
+}
+a) Email id should not start with '.' and '@' 
+b) Email id should end with either 'm' or 'n' 
+c) Email id should have '@' only once
+d) Length should be minimum 10 maximum 30
+
+
+4) Identify Function prototype for the following requirements. 
+
+a) Online shopping
+b) E-ticket application
+c) Fund transfer application
+d) Mobile Recharge application
+
+
+5. Create a function that takes a sentence as input and does the following validation 
+
+a) Length of the sentence should not exceed maximum of 100 characters.
+b) Sentence should have at-least one comma.
+c) Sentence should not have dot in between.
+d) Should not start and end with spaces
+e) should end with dot
+
+
+
+Classes & Object
+OOPS
+
+6. Identify the class names for the following apps:
+a) UBER App
+b) Amazon App
+c) IRCTC App
+d) Swiggy App
+
+
+7. Pick class names from the given list
+
+Excellent
+Lazy 
+Status 
+age
+transferMoney 
+productId 
+HTCGloabalservices 
+mobilenumber
+Ram
+sleep 
+fast 
+eating
+
+
+
+8. a) Create a class EmailValidator , encapsulate the method prepared in question no 3 and test it.
+
+   b) Create a class SentenceValidator , encapsulate the method you have created  in question no 5 and test it.
+
+9. Store employee objects in list and set , try basic CRUD operations.
+
+10. A shop has pets, shop should have sufficient facility to do CRUD operations with the pet.
+Code pets with these possibilities (List, Dictionary )
+Handle user defined exceptions like “PetNotFoundExceptions”, “InValidPriceexception”
+
+
+		[List, Dictionary ]
+
+
+11 . Redo Question number 3 and 5 using regular expressions .
+
+
+File handling
+
+12. Segregate an employee file ( libre office fomat )  with respect to gender into 2 output files.
+
+       		[TWO EXCEL]
+
+13.How do you check if an input file ( libre office format ) is empty or not ?
+
+
+14. Write a python program to achieve the following business logics
+
+Create an Order management system for a retail store that does transaction of goods, 
+where the details of the products such as Product Code, Product Name, Product Price and Quantity_On_Hand are maintained in a product File, 
+whenever a transaction request comes, it is recorded in Transaction File which contains the Fields such as Transaction_Id, Product Code, and Quantity Ordered.
+If the requested Product is available and sufficient
+   Prepare bill and populate ship file
+   Update the quantity on hand
+else
+   Populate pending file with status either “Not Available” or “Not sufficient”
+
+Note: Try with libreoffice calc format.
+
+
+
+15. A Service file (.xls file format) has details about serviceId, Service Description and price, read the data from the file 
+validate (price should be greater than zero) and load the data to services table(use postgres or mysql).
+
+a) Write the invalid data to rejection file
+b) Log the read and insert counter
+c) Store the DB connection properties with .XLS (using LibreOffice lib) or XML file.
+d) Handle EmptyFileException.
+         
+	 	[EXCEL TO SQL]
+
+16. Try basic CRUD operation on product table ( use postgres or mysql ) using python.
+     		
+
+		[SQL]
+
+17. Simulate Unload operation of a product table to product file in .XLS file format.
+
+		
+		[SQL to EXCEL]
+
+18. Use loggers and log the CRUD counters to a log file.
+
+19. List out the challenges you faced in python lab.
+
+20. Do a comparative case study of python with another programing language ( Core Java or C# ) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4

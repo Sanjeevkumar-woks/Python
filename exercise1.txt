@@ -1,0 +1,29 @@
+'''
+Created on 27-May-2020
+
+@author: USER
+'''
+bill_value=float(input("Enter the bill_amount made by customer in rupees"))
+total_amount=bill_value
+membership_type=input("Enter the membership details")
+if membership_type=="premium":
+ print("20% discount is available")   
+ bill_value=bill_value*0.2
+ total_amount=total_amount-bill_value
+elif membership_type=="gold":
+ print("15% discount is available")   
+ bill_value=bill_value*0.15
+ total_amount=total_amount-bill_value
+elif membership_type=="silver":
+ print("10% discount is available")
+ bill_value=bill_value*0.1 
+ total_amount=total_amount-bill_value
+else:
+    if bill_value>2000.0:
+     print("5% discount is available")   
+     bill_value=bill_value*0.05
+     total_amount=total_amount-bill_value
+print("Discount availed in rupees")     
+print(bill_value)
+print("remaining amount after applying discount")
+print(total_amount)    

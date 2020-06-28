@@ -1,0 +1,210 @@
+DBConnector class:
+-----------------
+'''
+Created on 01-Jun-2020
+
+@author: USER
+'''
+import json
+import psycopg2
+class DBConnector(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        pass
+    
+    def connecting_to_database(self):
+        file=open("connection_config.json")
+        datas=json.load(file)
+        data=datas["connection_details"]
+        dbname=data["dbname"]
+        dbserver=data["server"]
+        dbusername=data["username"]
+        dbpassword=data["password"]
+        conne=psycopg2.connect("dbname='"+dbname+"'user='"+dbusername+"'host='"+dbserver+"'password='"+dbpassword+"'")
+        #conne=psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9790270846'")
+        print("successfully connected to the database")
+        print(conne)
+        file.close()
+        return conne
+                  
+Product class:
+-------------
+'''
+Created on 01-Jun-2020
+
+@author: USER
+'''
+
+class Product(object):
+    '''
+    classdocs
+    '''
+    __productid=None
+    __productname=None
+    __productprice=None
+    __productquantity=None
+    def __init__(self, productid, productname, productprice, productquantity):
+        self.__productid = productid
+        self.__productname = productname
+        self.__productprice = productprice
+        self.__productquantity = productquantity
+
+    def get_productid(self):
+        return self.__productid
+
+
+    def get_productname(self):
+        return self.__productname
+
+
+    def get_productprice(self):
+        return self.__productprice
+
+
+    def get_productquantity(self):
+        return self.__productquantity
+
+
+    def set_productid(self, value):
+        self.__productid = value
+
+
+    def set_productname(self, value):
+        self.__productname = value
+
+
+    def set_productprice(self, value):
+        self.__productprice = value
+
+
+    def set_productquantity(self, value):
+        self.__productquantity = value
+
+
+    def del_productid(self):
+        del self.__productid
+
+
+    def del_productname(self):
+        del self.__productname
+
+
+    def del_productprice(self):
+        del self.__productprice
+
+
+    def del_productquantity(self):
+        del self.__productquantity
+        
+    def __str__(self):
+        return str(self.__productid)+" "+self.__productname+" "+str(self.__productprice)+" "+str(self.__productquantity)
+
+
+    def __repr__(self):
+        return str(self.__productid)+" "+self.__productname+" "+str(self.__productprice)+" "+str(self.__productquantity)    
+    
+
+    
+CRUDFunctionalities class:
+-------------------------
+'''
+Created on 01-Jun-2020
+
+@author: USER
+'''
+from pip._vendor.pep517.colorlog import curses
+class CRUDFunctionalities(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        pass
+    
+    def insert_product(self,connection9,list):
+        curse=connection9.cursor()
+        for index in list:
+            print("Hello")
+            curse.execute("INSERT INTO shop(productid, productname, productprice, productquantity) VALUES(%s,%s,%s,%s)",(index.get_productid(),index.get_productname(),index.get_productprice(),index.get_productquantity()))
+            connection9.commit()
+            print("ending one insertion to db")
+        
+    def retrieve_products(self,connection9,productid): 
+        curse=connection9.cursor()
+        curse.execute("SELECT productid,productname,productprice,productquantity FROM shop WHERE productid=%s",(str(productid)))
+        connection9.commit()
+        rows=curse.fetchall()
+        for row in rows:
+            print("Id = ", row[0])
+            print("Name = ", row[1])
+            print("Price  = ", row[2])
+            print("Quantity  = ", row[3], "\n")
+             
+        
+    def update_product(self,connection9,productid,productquantity):
+        curse=connection9.cursor()
+        curse.execute("UPDATE shop SET productquantity=%s where productid=%s",(str(productquantity),str(productid)))
+        connection9.commit()
+        
+    def delete_product(self,connection9,productid):
+        curse=connection9.cursor()
+        curse.execute("DELETE FROM shop WHERE productid=%s",(str(productid)))
+        connection9.commit()  
+        
+                
+Main:
+----
+'''
+Created on 01-Jun-2020
+
+@author: USER
+'''
+from crudoperationsondb.dbconnector import DBConnector
+from crudoperationsondb.product import Product
+from crudoperationsondb.crudmethods import CRUDFunctionalities
+if __name__ == '__main__':
+    dbObject=DBConnector()
+    connection9=dbObject.connecting_to_database()
+    mylist=[]
+    productObject=Product(8,"AirConditioner",30000.0,9)
+    productObject2=Product(1,"TV",30000.0,9)
+    productObject3=Product(2,"Refrigirator",15000.0,19)
+    mylist.append(productObject)
+    mylist.append(productObject2)
+    mylist.append(productObject3)
+    print(mylist)
+    crud_object=CRUDFunctionalities()
+    crud_object.insert_product(connection9, mylist)
+    print("Retrieve")
+    productid=int(input("Enter the productid"))
+    crud_object.retrieve_products(connection9, productid)
+    print("Update")
+    productid2=int(input("Enter the productid"))
+    productquantity=int(input("Enter the productquantity"))
+    crud_object.update_product(connection9, productid2, productquantity)
+    print("Delete")
+    productid3=int(input("Enter the productid"))
+    crud_object.delete_product(connection9, productid3)
+    
+    
+    
+connection_details.json:
+-----------------------
+{
+"connection_details":{"dbname":"PetStore",
+                      "server":"localhost",
+                      "username":"postgres",
+                      "password":"9790270846"
+                     }
+}
